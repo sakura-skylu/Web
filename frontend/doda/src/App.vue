@@ -1,6 +1,5 @@
 <template>
   <div id="app" class="overall">
-    <!--声明路由占位标签-->
     <router-view></router-view>
   </div>
 </template>
@@ -13,12 +12,11 @@ export default {
 
 <style>
 #app {
-  /* 防止额外滚动条 */
   overflow: hidden;
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: Inter, Roboto, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif;
+  font-variant-numeric: tabular-nums;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
 }
 </style>
