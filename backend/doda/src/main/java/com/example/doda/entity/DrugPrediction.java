@@ -1,20 +1,10 @@
 package com.example.doda.entity;
 
 public class DrugPrediction {
-//    private int id;
     private String sampleId;
     private String drugName;
     private float sensitivityScore;
     private String cancerType;
-
-    // Getters and Setters
-//    public int getId() {
-//        return id;
-//    }
-//
-//    public void setId(int id) {
-//        this.id = id;
-//    }
 
     public String getSampleId() {
         return sampleId;
