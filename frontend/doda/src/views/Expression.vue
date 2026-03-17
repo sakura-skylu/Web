@@ -1,46 +1,72 @@
-<!-- DE火山图，
-    cox风险图，生存曲线图（列线图），校准曲线
-    GSVA
--->
 <template>
   <div>
     <Head />
-    <el-container>
+    <el-container class="workbench">
       <Menu />
-        <el-main>
-          <h1 class="page-title">Expression</h1>
-          <div class="divider"></div>
-          <!-- 选择框 -->
-          <Select @change="handleCancerTypeChange" />
+      <el-main>
+        <div class="page-title-wrap">
+          <h1 class="page-title">Differential Expression Workbench</h1>
+          <p>筛选数据 → 运行算法 → 查看结果</p>
+        </div>
 
-          <el-row :gutter="20">
-            <el-col v-for="chart in charts" :key="chart.type" :span="chart.span" class="chart-col">
-              <div class="chart-container">
-                <h3>{{ chart.title }}</h3>
-                <template v-if="selectedCancerType">
-                  <img
-                    :src="getChartUrl(chart.type)"
-                    :alt="chart.title"
-                    @click="handleImgClick(chart.type)"
-                    class="chart-image"
-                  />
-                </template>
-                <template v-else>
-                  <div class="example-placeholder">
-                    <img :src="chart.exampleUrl" :alt="chart.title + ' example'" />
-                    <h3>(e.g.)</h3>
+        <div class="tri-layout">
+          <aside class="left-panel panel-card">
+            <h3>参数配置</h3>
+            <Select @change="handleCancerTypeChange" />
+            <el-form label-position="top" class="param-form">
+              <el-form-item label="log2FC 阈值">
+                <el-slider v-model="params.logfc" :min="0.5" :max="4" :step="0.1" show-input />
+              </el-form-item>
+              <el-form-item label="Padj 阈值">
+                <el-input-number v-model="params.padj" :min="0.0001" :max="0.1" :step="0.001" :precision="4" />
+              </el-form-item>
+              <el-form-item label="风险分组策略">
+                <el-radio-group v-model="params.group">
+                  <el-radio-button label="Median" />
+                  <el-radio-button label="Quartile" />
+                </el-radio-group>
+              </el-form-item>
+            </el-form>
+            <el-button type="primary" :disabled="!selectedCancerType" @click="runAnalysis">运行分析</el-button>
+          </aside>
+
+          <section class="canvas panel-card">
+            <el-skeleton :rows="5" animated v-if="loading" />
+            <el-row v-else :gutter="16">
+              <el-col v-for="chart in charts" :key="chart.type" :span="chart.span" class="chart-col">
+                <div class="chart-card">
+                  <div class="chart-head">
+                    <strong>{{ chart.title }}</strong>
+                    <span>
+                      <el-button type="text" @click="openFull(chart.type)">全屏</el-button>
+                      <el-button type="text" @click="downloadChart(chart.type)">下载</el-button>
+                    </span>
                   </div>
-                </template>
-              </div>
-            </el-col>
-          </el-row>
+                  <img :src="getChartUrl(chart.type)" :alt="chart.title" @click="openFull(chart.type)" />
+                </div>
+              </el-col>
+            </el-row>
+          </section>
 
-        </el-main>
+          <aside class="detail panel-card">
+            <h3>详情面板</h3>
+            <el-table :data="candidateGenes" height="260" @row-click="selectGene" size="mini">
+              <el-table-column prop="gene" label="Gene" width="120"/>
+              <el-table-column prop="log2fc" label="log2FC"/>
+              <el-table-column prop="padj" label="padj"/>
+            </el-table>
+            <div v-if="activeGene" class="gene-detail">
+              <h4>{{ activeGene.gene }}</h4>
+              <p>{{ activeGene.desc }}</p>
+            </div>
+            <div v-else class="gene-detail">点击左侧图或下方表格中的基因查看注释信息。</div>
+          </aside>
+        </div>
+      </el-main>
     </el-container>
 
-    <!-- 放大弹窗 -->
-    <el-dialog :visible.sync="dialogVisible" width="65%" :show-close="true" center>
-      <img :src="dialogImgUrl" alt="Chart" style="width: 100%; height: auto; display: block; margin: 0 auto;" />
+    <el-dialog :visible.sync="dialogVisible" width="70%" center>
+      <img :src="dialogImgUrl" alt="Chart" style="width: 100%" />
     </el-dialog>
   </div>
 </template>
@@ -52,129 +78,76 @@ import Select from '../components/Select.vue';
 
 export default {
   name: 'Expression',
-  components: {
-    Menu,
-    Head,
-    Select
-  },
+  components: { Menu, Head, Select },
   data() {
     return {
-      selectedCancerType: '', // 初始化为空字符串
+      selectedCancerType: '',
+      loading: false,
+      params: { logfc: 1, padj: 0.05, group: 'Median' },
       charts: [
-        { title: 'DE Volcano', type: 'volcano', span: 12, exampleUrl: '/charts/example/volcano.png' },
-        { title: 'Cox Risk', type: 'cox', span: 12, exampleUrl: '/charts/example/coxrisk.png' },
-        { title: 'Survival', type: 'survival', span: 12, exampleUrl: '/charts/example/survival.png' },
-        { title: 'Calibration', type: 'calibration', span: 12, exampleUrl: '/charts/example/calibration.png' },
-        { title: 'GSVA Score', type: 'gsva', span: 24, exampleUrl: '/charts/example/gsva.png' }
+        { title: 'DE Volcano', type: 'volcano', span: 12 },
+        { title: 'Cox Risk', type: 'coxrisk', span: 12 },
+        { title: 'Survival', type: 'survival', span: 12 },
+        { title: 'Calibration', type: 'calibration', span: 12 },
+        { title: 'GSVA Score', type: 'gsva', span: 24 }
       ],
-      dialogVisible: false,   // 控制弹窗显示
-      dialogImgUrl: ''       // 当前放大的图片地址
+      candidateGenes: [
+        { gene: 'TP53', log2fc: 2.1, padj: 0.0003, desc: '抑癌基因，参与 DNA 损伤应答。' },
+        { gene: 'EGFR', log2fc: 1.8, padj: 0.0011, desc: '受体酪氨酸激酶，常见于实体瘤增殖通路。' },
+        { gene: 'CD274', log2fc: -1.2, padj: 0.0046, desc: 'PD-L1 编码基因，关联免疫逃逸。' }
+      ],
+      activeGene: null,
+      dialogVisible: false,
+      dialogImgUrl: ''
     };
   },
   methods: {
-    // 处理选择框变化
     handleCancerTypeChange(value) {
-      console.log('Selected Cancer Type:', value);
       this.selectedCancerType = value;
     },
-    // 根据图表类型和选择的 cancer type 获取图表 URL
-    getChartUrl(chartType) {
-      const url = `/charts/expression/${this.selectedCancerType}/${chartType}.png`;
-      console.log('Generated URL:', url);
-      return url;
+    runAnalysis() {
+      this.loading = true;
+      setTimeout(() => {
+        this.loading = false;
+      }, 900);
     },
-    // 点击图片放大
-    handleImgClick(chartType) {
+    getChartUrl(chartType) {
+      if (!this.selectedCancerType) {
+        return `/charts/example/${chartType === 'coxrisk' ? 'coxrisk' : chartType}.png`;
+      }
+      return `/charts/expression/${this.selectedCancerType}/${chartType}.png`;
+    },
+    openFull(chartType) {
       this.dialogImgUrl = this.getChartUrl(chartType);
       this.dialogVisible = true;
-      console.log('dialogVisible:', this.dialogVisible, 'dialogImgUrl:', this.dialogImgUrl);
+    },
+    downloadChart(chartType) {
+      const link = document.createElement('a');
+      link.href = this.getChartUrl(chartType);
+      link.download = `${this.selectedCancerType || 'example'}-${chartType}.png`;
+      link.click();
+    },
+    selectGene(row) {
+      this.activeGene = row;
     }
   }
 };
 </script>
 
 <style scoped>
-::v-deep .el-dialog {
-  height: auto;
-  position: relative;
-  margin: 15vh auto 50px;
-  background: #fff;
-  border-radius: 2px;
-  box-shadow: 0 1px 3px rgb(0 0 0 / 30%);
-  box-sizing: border-box;
-}
-.chart-col {
-  height: 500px;
-  margin-bottom: 20px;
-}
-.el-main {
-  max-height: 88vh; /* 设置最大高度，允许内容区滚动 */
-  overflow-y: auto; /* 当内容超出时显示垂直滚动条 */
-}
-/* 图表容器样式 */
-.chart-container {
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.12); /* 阴影效果 */
-  border: 2px solid #ddd;
-  padding: 10px;
-  border-radius: 10px;
-  text-align: center;
-  background-color: #ffffff;
-  height: 500px; /* 设置固定高度 */
-  display: flex; /* 使用 flex 布局 */
-  flex-direction: column; /* 垂直排列内容 */
-  justify-content: center; /* 垂直居中 */
-  align-items: center; /* 水平居中 */
-  overflow: hidden; /* 防止图片溢出容器 */
-}
-
-.chart-container h3 {
-  height: 5%;
-  margin-bottom: 10px;
-  font-size: 20px;
-  color: #333333;
-}
-
-.chart-image {
-  cursor: zoom-in;
-  max-width: 100%;
-  height: 90%;
-  object-fit: contain; /* 保持图片比例，适应容器 */
-  display: block;
-  margin: 0 auto;
-}
-
-.example-placeholder {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 90%;
-}
-
-.example-placeholder img {
-  max-width: 100%;
-  max-height: 90%;
-  object-fit: contain;
-  display: block;
-  margin: 0 auto;
-}
-
-/* 页面标题样式 */
-.page-title {
-  height: auto;
-  font-size: 32px; /* 放大字体 */
-  font-weight: bold;
-  color: #333333;
-  margin: 0; /* 去掉默认外边距 */;
-  text-align: left; /* 靠左对齐 */
-}
-
-/* 分隔线样式 */
-.divider {
-  width: 100%;
-  height: 1px;
-  background-color: #000000; /* 分隔线颜色 */
-  margin: 0px 0 10px 0; /* 设置上下间距 */
+.workbench { background: #f4f7f6; }
+.page-title-wrap { text-align: left; margin-bottom: 12px; }
+.page-title { margin: 0; color: #2c3e50; }
+.tri-layout { display: grid; grid-template-columns: 300px 1fr 320px; gap: 16px; }
+.panel-card { background: #fff; border-radius: 10px; padding: 14px; box-shadow: 0 8px 20px rgba(44,62,80,.08); }
+.canvas { min-height: 72vh; }
+.chart-col { margin-bottom: 14px; }
+.chart-card img { width: 100%; height: 260px; object-fit: contain; cursor: zoom-in; }
+.chart-head { display: flex; justify-content: space-between; margin-bottom: 6px; }
+.gene-detail { margin-top: 10px; text-align: left; color: #2c3e50; }
+.param-form { margin: 12px 0; }
+@media (max-width: 1400px) {
+  .tri-layout { grid-template-columns: 260px 1fr; }
+  .detail { grid-column: 1 / -1; }
 }
 </style>
