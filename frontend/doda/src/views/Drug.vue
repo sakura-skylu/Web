@@ -1,8 +1,8 @@
 <template>
   <div>
-    <Head />
+    <Head v-if="!embedded" />
     <el-container>
-      <Menu />
+      <Menu v-if="!embedded" />
       <el-main class="drug-main">
         <h1 class="page-title">Drug Sensitivity</h1>
         <div class="toolbar">
@@ -49,6 +49,13 @@ import axios from 'axios';
 export default {
   name: 'Drug',
   components: { Menu, Head, Select },
+  props: {
+    // 当被 Analysis 嵌入时，隐藏外层 Head/Menu，避免重复
+    embedded: {
+      type: Boolean,
+      default: false
+    }
+  },
   data() {
     return {
       selectedCancerType: '',

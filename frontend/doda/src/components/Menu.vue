@@ -16,28 +16,34 @@
         </el-menu-item>
       </router-link>
 
+      <router-link to="/analysis">
+        <el-menu-item index="/analysis">
+          <span slot="title" class="menu-item-text"><i class="fa fa-tasks fa-lg fa-fw"></i>Analysis</span>
+        </el-menu-item>
+      </router-link>
+
       <router-link to="/expression">
-        <el-menu-item index="/expression">        
+        <el-menu-item index="/expression">
           <span slot="title" class="menu-item-text"><i class="fa fa-bar-chart fa-lg fa-fw"></i>Expression</span>
         </el-menu-item>
       </router-link>
 
       <router-link to="/mutation">
         <el-menu-item index="/mutation">
-          <span class="menu-item-text"><i class="fa fa-th fa-lg fa-fw"></i>Mutation</span>
+          <span slot="title" class="menu-item-text"><i class="fa fa-th fa-lg fa-fw"></i>Mutation</span>
         </el-menu-item>
       </router-link>
 
       <router-link to="/immune">
-      <el-menu-item index="/immune">        
-        <span slot="title" class="menu-item-text"><i class="fa fa-heartbeat fa-lg fa-fw"></i>Immune</span>
-      </el-menu-item>
+        <el-menu-item index="/immune">
+          <span slot="title" class="menu-item-text"><i class="fa fa-heartbeat fa-lg fa-fw"></i>Immune</span>
+        </el-menu-item>
       </router-link>
 
       <router-link to="/drug">
-      <el-menu-item index="/drug">
-        <span slot="title" class="menu-item-text"><i class="fa fa-medkit fa-lg fa-fw"></i>Drug</span>
-      </el-menu-item>
+        <el-menu-item index="/drug">
+          <span slot="title" class="menu-item-text"><i class="fa fa-medkit fa-lg fa-fw"></i>Drug</span>
+        </el-menu-item>
       </router-link>
 
       <router-link to="/help">

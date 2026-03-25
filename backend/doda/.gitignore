@@ -31,3 +31,8 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# Runtime outputs
+uploads/
+engine/doda/results/
+.m2/

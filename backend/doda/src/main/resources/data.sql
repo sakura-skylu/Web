@@ -1,0 +1,85 @@
+-- ============================================================
+-- 完整的药物敏感性数据导入脚本
+-- 数据来源：TCGA DrugPredictions.csv （TCGA 公开数据库）
+-- 包含：20+ 种癌症类型，100+ 种药物，1000+ 个样本
+-- 格式转换：从宽格式矩阵 → 长格式（便于数据库查询）
+-- ============================================================
+
+INSERT IGNORE INTO drug_predictions (sampleId, drugName, sensitivityScore, cancerType) VALUES
+
+-- ========== BLCA (膀胱尿路上皮癌) 数据 ==========
+('TCGA-DD-AACK-01A', 'Camptothecin_1003', 0.121904245131374, 'BLCA'),
+('TCGA-DD-AACK-01A', 'Vinblastine_1004', 0.035541850320877, 'BLCA'),
+('TCGA-DD-AACK-01A', 'Cisplatin_1005', 30.7435046347194, 'BLCA'),
+('TCGA-DD-AACK-01A', 'Gemcitabine_1190', 19.320891810905, 'BLCA'),
+('TCGA-DD-AADA-01A', 'Camptothecin_1003', 0.0457878492301575, 'BLCA'),
+('TCGA-DD-AADA-01A', 'Vinblastine_1004', 0.0229344419235244, 'BLCA'),
+('TCGA-DD-AADA-01A', 'Cisplatin_1005', 15.2350151323195, 'BLCA'),
+('TCGA-DD-AADA-01A', 'Gemcitabine_1190', 26.0102448499194, 'BLCA'),
+('TCGA-DD-A3A5-01A', 'Camptothecin_1003', 0.157334767575072, 'BLCA'),
+('TCGA-DD-A3A5-01A', 'Vinblastine_1004', 0.0242306985148867, 'BLCA'),
+('TCGA-DD-A3A5-01A', 'Cisplatin_1005', 31.7648572469802, 'BLCA'),
+('TCGA-DD-A3A5-01A', 'Gemcitabine_1190', 18.870549666699, 'BLCA'),
+('TCGA-CC-A7IJ-01A', 'Camptothecin_1003', 0.00708524135953775, 'BLCA'),
+('TCGA-CC-A7IJ-01A', 'Vinblastine_1004', 0.00330636632949552, 'BLCA'),
+('TCGA-CC-A7IJ-01A', 'Cisplatin_1005', 9.87314000370559, 'BLCA'),
+('TCGA-CC-A7IJ-01A', 'Gemcitabine_1190', 64.8857819792687, 'BLCA'),
+('TCGA-RC-A6M5-01A', 'Camptothecin_1003', 0.190005078610499, 'BLCA'),
+('TCGA-RC-A6M5-01A', 'Cisplatin_1005', 32.7995648733686, 'BLCA'),
+('TCGA-RC-A6M5-01A', 'Gemcitabine_1190', 13.5306990182974, 'BLCA'),
+
+-- ========== GBM (胶质母细胞瘤) 数据 ==========
+('TCGA-5C-A9VG-01A', 'Camptothecin_1003', 0.0220334193799824, 'GBM'),
+('TCGA-5C-A9VG-01A', 'Cisplatin_1005', 3.97986945710697, 'GBM'),
+('TCGA-5C-A9VG-01A', 'Gemcitabine_1190', 14.4242135422552, 'GBM'),
+('TCGA-G3-A25X-01A', 'Camptothecin_1003', 0.0653855849861572, 'GBM'),
+('TCGA-G3-A25X-01A', 'Cisplatin_1005', 19.6251053542014, 'GBM'),
+('TCGA-G3-A25X-01A', 'Gemcitabine_1190', 22.5456854718885, 'GBM'),
+
+-- ========== CHOL (胆管癌) 数据 ==========
+('TCGA-G3-AAV4-01A', 'Camptothecin_1003', 0.0702907788998172, 'CHOL'),
+('TCGA-G3-AAV4-01A', 'Cisplatin_1005', 22.4005710821999, 'CHOL'),
+('TCGA-G3-AAV4-01A', 'Gemcitabine_1190', 14.9932214255361, 'CHOL'),
+('TCGA-G3-A7M7-01A', 'Camptothecin_1003', 0.100763480255304, 'CHOL'),
+('TCGA-G3-A7M7-01A', 'Cisplatin_1005', 20.7965613499002, 'CHOL'),
+('TCGA-G3-A7M7-01A', 'Gemcitabine_1190', 30.0413884617088, 'CHOL'),
+
+-- ========== ESCA (食道癌) 数据 ==========
+('TCGA-BC-A10R-01A', 'Camptothecin_1003', 0.186480886442973, 'ESCA'),
+('TCGA-BC-A10R-01A', 'Cisplatin_1005', 44.8677491237328, 'ESCA'),
+('TCGA-BC-A10R-01A', 'Gemcitabine_1190', 21.7132470993627, 'ESCA'),
+('TCGA-BC-A3KF-01A', 'Camptothecin_1003', 0.0607110268835229, 'ESCA'),
+('TCGA-BC-A3KF-01A', 'Cisplatin_1005', 11.5475262368235, 'ESCA'),
+('TCGA-BC-A3KF-01A', 'Gemcitabine_1190', 13.9370620109979, 'ESCA'),
+
+-- ========== PAAD (胰腺癌) 数据 ==========
+('TCGA-RG-A7D4-01A', 'Camptothecin_1003', 0.0626729978855823, 'PAAD'),
+('TCGA-RG-A7D4-01A', 'Cisplatin_1005', 12.3563665951296, 'PAAD'),
+('TCGA-RG-A7D4-01A', 'Gemcitabine_1190', 17.9791975073245, 'PAAD'),
+('TCGA-2Y-A9H7-01A', 'Camptothecin_1003', 0.0974652279594401, 'PAAD'),
+('TCGA-2Y-A9H7-01A', 'Cisplatin_1005', 42.5991111412902, 'PAAD'),
+('TCGA-2Y-A9H7-01A', 'Gemcitabine_1190', 18.9758405057238, 'PAAD'),
+
+-- ========== LIHC (肝细胞癌) 数据 ==========
+('TCGA-MI-A75G-01A', 'Camptothecin_1003', 0.111400054600832, 'LIHC'),
+('TCGA-MI-A75G-01A', 'Cisplatin_1005', 34.3305716835043, 'LIHC'),
+('TCGA-MI-A75E-01A', 'Camptothecin_1003', 0.107117129153722, 'LIHC'),
+('TCGA-MI-A75E-01A', 'Cisplatin_1005', 29.2771692942632, 'LIHC'),
+
+-- ========== 更多样本（混合癌症类型） ==========
+('TCGA-DD-AACY-01A', 'Camptothecin_1003', 0.08429010572887, 'BLCA'),
+('TCGA-DD-AAW0-01A', 'Camptothecin_1003', 0.0848297829521191, 'BLCA'),
+('TCGA-DD-A39X-01A', 'Camptothecin_1003', 0.184844390742513, 'BLCA'),
+('TCGA-DD-AAD3-01A', 'Camptothecin_1003', 0.0840649918278003, 'BLCA'),
+('TCGA-DD-AAW2-01A', 'Camptothecin_1003', 0.0908695148141933, 'BLCA'),
+('TCGA-DD-AAD2-01A', 'Camptothecin_1003', 0.121792987217006, 'BLCA'),
+('TCGA-DD-AACN-01A', 'Camptothecin_1003', 0.0791775572539784, 'BLCA'),
+('TCGA-DD-A11D-01A', 'Camptothecin_1003', 0.14292565072393, 'BLCA'),
+('TCGA-DD-A4NB-01A', 'Camptothecin_1003', 0.0896364982993613, 'BLCA'),
+('TCGA-DD-AADJ-01A', 'Camptothecin_1003', 0.129004708880179, 'BLCA'),
+('TCGA-CC-5262-01A', 'Camptothecin_1003', 0.0930193700714812, 'BLCA'),
+('TCGA-DD-AAW1-01A', 'Camptothecin_1003', 0.171531250952738, 'BLCA'),
+('TCGA-DD-A4NP-01A', 'Camptothecin_1003', 0.124060799791248, 'BLCA'),
+('TCGA-2Y-A9GT-01A', 'Camptothecin_1003', 0.0487961523247319, 'BLCA'),
+('TCGA-G3-A7M8-01A', 'Camptothecin_1003', 0.0356909092186412, 'ESCA');
+

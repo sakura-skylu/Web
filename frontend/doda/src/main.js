@@ -4,6 +4,7 @@ import router from './router/index'
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import 'font-awesome/css/font-awesome.min.css'
+import Chart from 'chart.js/auto';
 
 Vue.config.productionTip = false
 Vue.use(ElementUI);

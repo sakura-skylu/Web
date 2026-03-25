@@ -1,9 +1,9 @@
 <!-- CNV棒棒糖 -->
 <template>
     <div>
-        <Head />
+        <Head v-if="!embedded" />
         <el-container>
-            <Menu />
+            <Menu v-if="!embedded" />
             <el-main>
                 <h1 class="page-title">Mutation</h1>
                 <div class="divider"></div>
@@ -21,7 +21,7 @@
                     <div v-else class="chart-container">
                         <el-row>
                             <el-col :span="12">
-                                <img src="\charts\example\cnv.png" alt="CNV" /><h3>(e.g.)</h3>
+                                <img src="/charts/example/cnv.png" alt="CNV" /><h3>(e.g.)</h3>
                             </el-col>
                             <el-col :span="12">
                                 <p v-html="Intro" class="intro-text"></p>
@@ -47,6 +47,13 @@ export default{
     name:'Mutation',
     components:{
         Menu, Head, Select
+    },
+    props: {
+      // 当被 Analysis 嵌入时，隐藏外层 Head/Menu，避免重复
+      embedded: {
+        type: Boolean,
+        default: false
+      }
     },
     data() {
       return {

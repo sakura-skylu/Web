@@ -1,9 +1,9 @@
 <!-- 免疫浸润，免疫评分 -->
 <template>
     <div>
-        <Head />
+        <Head v-if="!embedded" />
         <el-container>
-            <Menu />
+            <Menu v-if="!embedded" />
             <el-main>
                 <h1 class="page-title">Immune</h1>
                 <div class="divider"></div>
@@ -23,7 +23,7 @@
           <div v-else class="chart-container">
             <el-row>
               <el-col :span="12" style="text-align: center;">
-                <img style="margin-top: 20px;" src="\charts\example\immune.png" alt="immune example" />
+                <img style="margin-top: 20px;" src="/charts/example/immune.png" alt="immune example" />
                 <h3>(e.g.)</h3>
               </el-col>
               <el-col :span="12" style="text-align: center;">
@@ -50,6 +50,13 @@ export default{
     components:{
         Menu, Head, Select
     },
+    props: {
+      // 当被 Analysis 嵌入时，隐藏外层 Head/Menu，避免重复
+      embedded: {
+        type: Boolean,
+        default: false
+      }
+    },
     data() {
     return {
       selectedCancerType: '',  // 初始化为空字符串
@@ -74,7 +81,9 @@ export default{
     },
     // 根据图表类型和选择的 cancer type 获取图表 URL
     getChartUrl(chartType) {
-      return `/charts/immune/${this.selectedCancerType}/${chartType}.png`;
+      // chartType 里包含空格（如 "B cells naive"），URL 里需要编码避免静态资源路径匹配失败
+      const safeChartType = encodeURIComponent(chartType);
+      return `/charts/immune/${this.selectedCancerType}/${safeChartType}.png`;
     },
     // 点击图片放大
     handleImgClick(chartType) {
