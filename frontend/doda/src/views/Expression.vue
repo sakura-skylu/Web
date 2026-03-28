@@ -97,7 +97,7 @@ export default {
 
 <style scoped>
 .expr-page {
-  background: #f4f7f6;
+  background: transparent;
 }
 
 .expr-header {
@@ -106,22 +106,24 @@ export default {
 
 .page-title {
   margin: 0;
-  color: #2c3e50;
-  font-size: 30px;
+  color: var(--app-text);
+  font-size: 32px;
   font-weight: 700;
+  letter-spacing: 0.2px;
 }
 
 .page-subtitle {
   margin: 6px 0 0;
-  color: #6b7b8c;
+  color: var(--app-muted);
   font-size: 16px;
 }
 
 .selector-wrap {
-  background: #fff;
-  border-radius: 10px;
+  background: var(--app-surface);
+  border-radius: var(--app-radius-sm);
   padding: 12px 16px;
-  box-shadow: 0 8px 20px rgba(44, 62, 80, 0.06);
+  box-shadow: var(--app-shadow-soft);
+  border: 1px solid var(--app-border);
   margin-bottom: 16px;
 }
 
@@ -130,11 +132,17 @@ export default {
 }
 
 .chart-card {
-  background: #fff;
-  border-radius: 12px;
+  background: var(--app-surface);
+  border-radius: var(--app-radius);
   padding: 12px 12px 10px;
-  box-shadow: 0 8px 20px rgba(44, 62, 80, 0.06);
-  border: 1px solid rgba(44, 62, 80, 0.08);
+  box-shadow: var(--app-shadow-soft);
+  border: 1px solid var(--app-border);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.chart-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--app-shadow);
 }
 
 .chart-card-head {
@@ -146,6 +154,7 @@ export default {
 
 .chart-actions .el-button {
   padding: 0 6px;
+  color: var(--app-primary);
 }
 
 .img-wrap {
@@ -160,6 +169,8 @@ export default {
   object-fit: contain;
   cursor: zoom-in;
   border-radius: 10px;
+  background: var(--app-surface-soft);
+  border: 1px solid rgba(23, 50, 72, 0.08);
 }
 
 .chart-col {

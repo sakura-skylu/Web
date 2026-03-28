@@ -62,59 +62,82 @@ export default {
 </script>
 
 <style scoped>
+.el-main {
+  box-shadow: var(--app-shadow-soft);
+  border: 1px solid var(--app-border);
+  border-radius: var(--app-radius);
+  background-color: var(--app-surface);
+  color: var(--app-text);
+  text-align: start;
+  overflow-y: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  margin: 12px 12px 0 0;
+  padding: 18px 22px;
+}
+
+.el-main h2 {
+  margin: 0 0 8px;
+  font-size: 28px;
+  color: var(--app-text);
+}
 
 .image-wrapper {
-  flex: 1; /* 填充列高度 */
+  flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: space-between; /* 图片在上，caption 在下 */
-  padding: 10px;
+  justify-content: space-between;
+  padding: 14px;
+  background: var(--app-surface);
+  border: 1px solid var(--app-border);
+  border-radius: var(--app-radius);
+  box-shadow: var(--app-shadow-soft);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.image-wrapper:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--app-shadow);
 }
 
 .image-caption {
-  margin-top: 8px;
-  font-size: 24px;
-  font-weight: 500;
-  color: #30a2ff;
+  margin-top: 10px;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--app-primary);
   text-align: center;
-  height: 120px; /* 固定文字区域高度 */
+  height: 96px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .footer-img {
-  width: 100%; /* 让图片适应列宽 */
+  width: 100%;
   height: auto;
   max-height: 400px;
-  /* max-width: 150px; 限制图片最大宽度 */
   display: block;
-  margin: auto; /* 确保图片居中 */
-  object-fit: contain; /* 保持图片比例 */
+  margin: auto;
+  object-fit: contain;
+  border-radius: 10px;
 }
 
 .intro-text {
-  letter-spacing: 0.8px; /* 字间距 */
-  line-height: 1.35; /* 行间距 */
-  font-size: 19px; /* 调整字体大小 */
-  text-align: justify; /* 让文本对齐（可选） */
+  letter-spacing: 0.3px;
+  line-height: 1.62;
+  font-size: 18px;
+  text-align: justify;
   height: auto;
-}
-
-.el-main {
-  box-shadow: inset 0 4px 20px rgba(0, 0, 0, 0.12); /* 阴影效果 */
-  max-height: 32%;
-  background-color: #ffffff;
-  color: #000000;
-  text-align: start;
-  overflow-y: auto; /* 允许滚动，但隐藏滚动条 */
-  scrollbar-width: none;
-  -ms-overflow-style: none;
+  color: var(--app-text);
+  margin: 0;
 }
 
 .el-footer {
   flex: 1;
-  background-color: #ffffff;
+  background-color: transparent;
   color: #333;
   text-align: center;
-  /* line-height: 100px; */
+  padding: 12px 6px 0;
 }
 
 </style>

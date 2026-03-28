@@ -73,32 +73,66 @@ export default{
 </script>
 
 <style>
-  a {/* 去掉导航栏中 router-link 的下划线 */
-    text-decoration: none;
-  }
+a {
+  text-decoration: none;
+  color: inherit;
+}
 </style>
 
 <style scoped>
-  .fa {/* 强制设置图标为黑色 */
-    color: black !important; 
-    margin-right: 10px;
-  }
+.fa {
+  color: #2e475f !important;
+  margin-right: 10px;
+}
 
-  /* 统一菜单项文字样式 */
-  .menu-item-text {
-    font-size: 20px;
-    vertical-align: middle;
-  }
+.menu-item-text {
+  font-size: 18px;
+  vertical-align: middle;
+  font-weight: 600;
+}
 
-  .el-menu-item{
-    text-align: left;
-  }
+.el-menu-item {
+  text-align: left;
+}
 
-  .el-aside {
-    background-color: #D3DCE6;
-    color: #333;
-    text-align: center;
-    line-height: 200px;
-    height:100%;
-  }
+.el-aside {
+  background: linear-gradient(180deg, #e6eff5 0%, #d4e3ee 100%);
+  color: #2e475f;
+  text-align: center;
+  line-height: 200px;
+  height: 100%;
+  border-right: 1px solid rgba(23, 50, 72, 0.08);
+}
+
+.tac {
+  height: 100%;
+}
+
+::v-deep .el-menu {
+  border-right: none;
+  background: transparent !important;
+  padding: 10px 8px;
+}
+
+::v-deep .el-menu-item {
+  margin: 6px 0;
+  border-radius: 10px;
+  height: 48px;
+  line-height: 48px;
+  transition: all 0.18s ease;
+}
+
+::v-deep .el-menu-item:hover {
+  background-color: rgba(31, 126, 163, 0.12) !important;
+}
+
+::v-deep .el-menu-item.is-active {
+  background: linear-gradient(90deg, rgba(31, 126, 163, 0.22), rgba(31, 126, 163, 0.08)) !important;
+  color: #1b5f81 !important;
+  box-shadow: inset 3px 0 0 #1f7ea3;
+}
+
+::v-deep .el-menu-item.is-active .fa {
+  color: #1b5f81 !important;
+}
 </style>

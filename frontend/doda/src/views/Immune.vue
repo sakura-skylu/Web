@@ -98,87 +98,98 @@ export default{
 .chart-col {
   margin-bottom: 20px;
 }
+
 .chart-image {
   cursor: zoom-in;
   width: 100%;
-  height: auto;
-}
-::v-deep .el-dialog {
-  height: auto;
-  position: relative;
-  margin: 15vh auto 50px;
-  background: #fff;
-  border-radius: 2px;
-  box-shadow: 0 1px 3px rgb(0 0 0 / 30%);
-  box-sizing: border-box;
-}
-.intro-text {
-    padding: 10px;
-    letter-spacing: 0.5px; /* 字间距 */
-    line-height: 1.6; /* 行间距 */
-    font-size: 24px; /* 调整字体大小 */
-    text-align: justify; /* 让文本对齐（可选） */
-    text-indent: 2em; /* 首行缩进2字符 */
-    display: flex; /* 使用 flex 布局 */
-    align-items: center; /* 垂直居中 */
-    justify-content: center; /* 水平居中（可选，根据需求） */
-    height: 100%; /* 确保容器高度 */
-}
-.el-main {
-  max-height: 88vh; /* 设置最大高度，允许内容区滚动 */
-  overflow-y: auto; /* 当内容超出时显示垂直滚动条 */
-}
-.el-row{
-  height: 500px;
-  margin-bottom: 20px; /* 设置底部间距 */
+  height: 100%;
+  object-fit: contain;
+  border-radius: 10px;
+  background: var(--app-surface-soft);
+  border: 1px solid rgba(23, 50, 72, 0.08);
 }
 
-/* 图表容器样式 */
+::v-deep .el-dialog {
+  margin: 10vh auto 40px;
+  border-radius: var(--app-radius-sm);
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(23, 50, 72, 0.25);
+}
+
+.intro-text {
+  padding: 12px;
+  letter-spacing: 0.3px;
+  line-height: 1.72;
+  font-size: 20px;
+  text-align: justify;
+  text-indent: 2em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: var(--app-text);
+}
+
+.el-main {
+  max-height: 88vh;
+  overflow-y: auto;
+}
+
+.el-row {
+  height: 500px;
+  margin-bottom: 20px;
+}
+
 .chart-container {
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.12); /* 阴影效果 */
-  border: 2px solid #ddd;
-  padding: 10px;
-  border-radius: 10px;
+  box-shadow: var(--app-shadow-soft);
+  border: 1px solid var(--app-border);
+  padding: 12px;
+  border-radius: var(--app-radius);
   text-align: center;
-  background-color: #ffffff;
-  height: 500px; /* 设置固定高度 */
-  display: flex; /* 使用 flex 布局 */
-  flex-direction: column; /* 垂直排列内容 */
-  justify-content: center; /* 垂直居中 */
-  align-items: center; /* 水平居中 */
-  overflow: hidden; /* 防止图片溢出容器 */
+  background-color: var(--app-surface);
+  height: 500px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.chart-container:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--app-shadow);
 }
 
 .chart-container h3 {
   height: 5%;
   margin-bottom: 10px;
   font-size: 20px;
-  color: #333333;
+  color: var(--app-text);
 }
 
 .chart-container img {
   max-width: 100%;
   height: 90%;
-  object-fit: contain; /* 保持图片比例，适应容器 */
+  object-fit: contain;
   display: block;
   margin: 0 auto;
 }
 
-  /* 页面标题样式 */
-  .page-title {
+.page-title {
   height: auto;
-  font-size: 32px; /* 放大字体 */
+  font-size: 32px;
   font-weight: bold;
-  color: #333333;
-  margin: 0; /* 去掉默认外边距 */;
-  text-align: left; /* 靠左对齐 */
+  color: var(--app-text);
+  margin: 0;
+  text-align: left;
+  letter-spacing: 0.2px;
 }
 
-/* 分隔线样式 */
 .divider {
   width: 100%;
-  height: 1px;
-  background-color: #000000; /* 分隔线颜色 */
-  margin: 0px 0 10px 0; /* 设置上下间距 */
+  height: 2px;
+  background: linear-gradient(90deg, #1f7ea3, rgba(31, 126, 163, 0));
+  margin: 4px 0 14px 0;
 }
 </style>

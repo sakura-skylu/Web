@@ -333,7 +333,7 @@ export default {
 
 <style scoped>
 .analysis-page {
-  background: #f4f7f6;
+  background: transparent;
 }
 
 .analysis-main {
@@ -347,14 +347,15 @@ export default {
 
 .page-title {
   margin: 0;
-  color: #2c3e50;
-  font-size: 30px;
+  color: var(--app-text);
+  font-size: 32px;
   font-weight: 700;
+  letter-spacing: 0.2px;
 }
 
 .page-subtitle {
   margin: 6px 0 0;
-  color: #6b7b8c;
+  color: var(--app-muted);
   font-size: 16px;
 }
 
@@ -365,11 +366,11 @@ export default {
 }
 
 .panel-card {
-  background: #fff;
-  border-radius: 12px;
+  background: var(--app-surface);
+  border-radius: var(--app-radius);
   padding: 14px;
-  box-shadow: 0 8px 20px rgba(44, 62, 80, 0.06);
-  border: 1px solid rgba(44, 62, 80, 0.06);
+  box-shadow: var(--app-shadow-soft);
+  border: 1px solid var(--app-border);
 }
 
 .input-panel h3,
@@ -386,7 +387,7 @@ export default {
   display: block;
   text-align: left;
   margin-bottom: 8px;
-  color: #2c3e50;
+  color: var(--app-text);
   font-weight: 600;
 }
 
@@ -396,7 +397,7 @@ export default {
 
 .upload-hint {
   margin-top: 6px;
-  color: #6b7b8c;
+  color: var(--app-muted);
   font-size: 12px;
 }
 
@@ -406,6 +407,9 @@ export default {
 
 .run-btn {
   width: 100%;
+  border-radius: 10px;
+  font-weight: 600;
+  box-shadow: 0 6px 16px rgba(31, 126, 163, 0.24);
 }
 
 .canvas-panel {
@@ -413,9 +417,16 @@ export default {
 }
 
 .chart-card {
-  border-radius: 12px;
+  border-radius: var(--app-radius-sm);
   padding: 12px;
-  border: 1px solid rgba(44, 62, 80, 0.08);
+  border: 1px solid var(--app-border);
+  background: var(--app-surface-soft);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.chart-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--app-shadow-soft);
 }
 
 .chart-head {
@@ -436,6 +447,8 @@ export default {
   object-fit: contain;
   cursor: zoom-in;
   border-radius: 10px;
+  background: #ffffff;
+  border: 1px solid rgba(23, 50, 72, 0.08);
 }
 
 .img-placeholder {
@@ -443,7 +456,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #909399;
+  color: var(--app-muted);
   text-align: center;
   padding: 12px;
 }
@@ -451,7 +464,7 @@ export default {
 .gene-detail {
   margin-top: 10px;
   text-align: left;
-  color: #2c3e50;
+  color: var(--app-text);
 }
 
 @media (max-width: 1400px) {

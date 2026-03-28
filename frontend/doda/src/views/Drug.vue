@@ -112,9 +112,65 @@ export default {
 </script>
 
 <style scoped>
-.drug-main { background: #f4f7f6; }
-.page-title { text-align: left; margin-top: 0; color: #2c3e50; }
-.toolbar { display: grid; grid-template-columns: 280px 1fr 120px; gap: 12px; align-items: end; margin-bottom: 14px; }
-.field span { display: block; text-align: left; margin-bottom: 6px; color: #2c3e50; }
-.table-container { background: #fff; padding: 10px; border-radius: 10px; margin-bottom: 14px; }
+.drug-main {
+  background: transparent;
+}
+
+.page-title {
+  text-align: left;
+  margin-top: 0;
+  margin-bottom: 14px;
+  color: var(--app-text);
+  font-size: 32px;
+  letter-spacing: 0.2px;
+}
+
+.toolbar {
+  display: grid;
+  grid-template-columns: 280px 1fr 120px;
+  gap: 12px;
+  align-items: end;
+  margin-bottom: 14px;
+  background: var(--app-surface);
+  border: 1px solid var(--app-border);
+  border-radius: var(--app-radius);
+  box-shadow: var(--app-shadow-soft);
+  padding: 14px;
+}
+
+.field span {
+  display: block;
+  text-align: left;
+  margin-bottom: 6px;
+  color: var(--app-text);
+  font-weight: 600;
+}
+
+.table-container {
+  background: var(--app-surface);
+  padding: 12px;
+  border-radius: var(--app-radius);
+  margin-bottom: 14px;
+  border: 1px solid var(--app-border);
+  box-shadow: var(--app-shadow-soft);
+}
+
+::v-deep .el-input__inner {
+  border-radius: 10px;
+}
+
+::v-deep .el-table th {
+  background: #f1f7fb;
+  color: #24465f;
+}
+
+::v-deep .el-pagination.is-background .el-pager li:not(.disabled).active {
+  background-color: var(--app-primary);
+}
+
+@media (max-width: 1200px) {
+  .toolbar {
+    grid-template-columns: 1fr;
+  }
+}
 </style>

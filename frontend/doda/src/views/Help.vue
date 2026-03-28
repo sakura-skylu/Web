@@ -52,22 +52,33 @@ export default{
 
 <style scoped>
 .text-container {
-  box-shadow: 0 10px 10px 0px rgba(0, 0, 0, 0.12); /* 阴影效果 */
-  border: 2px solid #ffffff;
-  color: #000000; /* 字体颜色 */ 
-  padding: 10px;
+  box-shadow: var(--app-shadow-soft);
+  border: 1px solid var(--app-border);
+  border-radius: var(--app-radius);
+  background: var(--app-surface);
+  color: var(--app-text);
+  padding: 14px;
   margin-bottom: 20px;
   height: auto;
 }
-.text-style {
-    letter-spacing: 0.5px; /* 字间距 */
-    line-height: 1.5; /* 行间距 */
-    font-size: 20px; /* 调整字体大小 */
-    text-align: justify; /* 让文本对齐（可选） */
-    justify-content: center; /* 水平居中（可选，根据需求） */
+
+.text-container h2 {
+  margin: 0 0 8px;
+  color: var(--app-primary-strong);
+  font-size: 28px;
 }
-.el-main{
-    max-height: 90vh;/* 设置最大高度为视口高度的 xx% */
-    overflow-y: auto; /* 启用垂直滚动条 */
+
+.text-style {
+  margin: 0;
+  letter-spacing: 0.25px;
+  line-height: 1.66;
+  font-size: 18px;
+  text-align: justify;
+  justify-content: center;
+}
+
+.el-main {
+  max-height: 90vh;
+  overflow-y: auto;
 }
 </style>
